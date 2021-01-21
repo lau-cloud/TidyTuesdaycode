@@ -4,14 +4,12 @@ library(sf)
 library(extrafont)
 library(ggimage)
 library(png)
+library(grid)
 # devtools::install_github("Shelmith-Kariuki/rKenyaCensus")
 library(rKenyaCensus)
-library(grid)
+
 
 ##read the data
-demography <- rKenyaCensus::V3_T2.3
-gender <- rKenyaCensus::V1_T2.2
-drinking_water <- rKenyaCensus::V4_T2.15
 albinism <- rKenyaCensus::V4_T2.28
 
 map <- rKenyaCensus::KenyaCounties_SHP %>% 
@@ -93,7 +91,7 @@ ggplot(df) +
             family = "Segoe UI Light") +
   guides(fill = guide_legend(override.aes = list(size = 0.5)))
 
-
+#save plot
 ggsave("kenya_albinism.png", 
        height = 8, 
        width =8, 
