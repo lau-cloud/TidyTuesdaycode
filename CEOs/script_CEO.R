@@ -9,12 +9,11 @@ library(extrafont)
 library(ggstream)
 
 
-
+#data
 departures <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-27/departures.csv')
 
 
 # wrangling
-
 ceo_waffle <- departures %>% 
   mutate(
     reason = case_when(
@@ -44,8 +43,6 @@ ceo_waffle$reason <- factor(ceo_waffle$reason, levels = c("retired",
 
 
 #geom_waffle
-
-
 waffle <- ggplot(ceo_waffle, aes(fill = reason, values = n)) +
   geom_waffle(n_rows = 11, size = 0.03, colour = "black") +
   scale_fill_manual(name = NULL,
