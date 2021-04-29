@@ -4,8 +4,8 @@ library(waffle)
 library(cowplot)
 library(extrafont)
 
- install.packages("remotes")
- remotes::install_github("davidsjoberg/ggstream")
+ #install.packages("remotes")
+ #remotes::install_github("davidsjoberg/ggstream")
 library(ggstream)
 
 
