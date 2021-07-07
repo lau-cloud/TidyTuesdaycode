@@ -7,16 +7,18 @@ library(scales)
 library(extrafont)
 
 
-
+#load data
 holidays <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-07-06/holidays.csv')
 
 
 
-#calendar
+#tidy: set year to 2021
 year(holidays$date_parsed) <- 2021
 
+#set language to English
 Sys.setlocale("LC_TIME", "English")
 
+#tidy
 days_count <- holidays %>% 
   rename(d_date = date_parsed) %>%
   group_by(d_date) %>%
@@ -44,7 +46,7 @@ days_count$text_month <- factor(days_count$text_month,
 
 #days_count <- days_count[-nrow(daily_totals),]
 
-
+#plot
 days_calendar <- ggplot(days_count, aes(x = wday, y = week)) + 
   geom_tile(aes(fill = n_holidays), colour = "#6A6A6A") +
   # geom_tile(fill="#bfbf3f", colour = "black") +
@@ -75,6 +77,12 @@ days_calendar <- ggplot(days_count, aes(x = wday, y = week)) +
         plot.margin = margin(1, 2, 1, 2, "cm"),
         plot.caption = element_text(size = 8, hjust = 1)) 
 
-days_calendar +
+final_plot <- days_calendar +
   guides(fill = guide_colourbar(barheight = 1,ticks = FALSE,title.position="top", title.hjust = 1
                                 ))
+
+#save
+ggsave("independence_days.png", 
+       final_plot, 
+       height = 7, width = 7, 
+       units = "in", dpi = 300)
