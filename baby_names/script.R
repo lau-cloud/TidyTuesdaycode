@@ -106,7 +106,7 @@ plot2 <- ggplot(male_names, aes(year, y=fct_reorder(name, n), height = n/50000,
 
 
 title_theme <- ggdraw() +
-  draw_label("50 most common names\n in the US since 1900", 
+  draw_label("50 most common given names\n in the US since 1900", 
              fontfamily = "Gadugi",
              fontface = "bold",
              size = 16,
@@ -128,7 +128,7 @@ final_plot <- plot_grid(title_theme,
           caption,
           ncol = 1, rel_heights = c(0.2, 1.5,0.1))
 
-
+final_plot
 
 #saving
 ggsave("top_names.png", 
@@ -138,52 +138,6 @@ ggsave("top_names.png",
        bg = "white")
 
 
-
-
-
-#gradient colors (thanks to stackoverflow: https://stackoverflow.com/questions/58525699/how-can-i-add-a-vertical-colour-gradient-to-a-ridgeplot-in-ggridges)
-
-#devtools::install_github("coolbutuseless/devout")
-#devtools::install_github("coolbutuseless/devoutsvg")
-#devtools::install_github("coolbutuseless/minisvg")
-#devtools::install_github("coolbutuseless/poissoned")
-#devtools::install_github("coolbutuseless/svgpatternsimple")
-library(svgpatternsimple)
-library(ggridges)
-
-gradient_pattern <- svgpatternsimple::create_pattern_gradient(
-  id      = "p1",                                  # HTML/SVG id to assign to this pattern
-  angle   = 90,                                    # Direction of the gradient
-  colour1 = "white",   # Starting colour
-  colour2 = "#05595B"                   # Final colour
-)
-
-my_pattern_list <- list(
-  `#000001` = list(fill = gradient_pattern)
-)
-
-#with new palette
-
-devoutsvg::svgout(filename = "female.svg", pattern_list = my_pattern_list)
-ggplot(female_names, aes(year, y=fct_reorder(name, n), height = n/50000, 
-                         group = name, scale =2)) + 
-  geom_ridgeline_gradient(alpha=0.1, scale = 4.5, size = 0,
-                          fill = '#000001', color = "white") +
-  xlim(1900,NA) +
-  labs(title = '50 most common female baby names since 1900', y ="", x="") +
-  theme(plot.title = element_text(hjust = 0.5, 
-                                  family = "Bahnschrift", 
-                                  size =14, 
-                                  face = "bold",
-                                  margin =margin(0,0,30,0)),
-        axis.ticks.y = element_blank(),
-        axis.text = element_text(family = "Bahnschrift", size = 7),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_line(size =0.5),
-        panel.border = element_blank())
-
-dev.off()
 
 
 
